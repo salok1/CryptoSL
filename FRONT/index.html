@@ -15,12 +15,41 @@
 
     <script type="text/javascript">
 
-        var form = document.getElementsByName("myForm")
+    var url = "localhost:3000/notes"
+    if (XMLHttpRequest) {
+        var request = new XMLHttpRequest();
+        if ("withCredentials" in request) {
+            // Firefox 3.5 and Safari 4
+            request.open('POST', url, true);
+            request.setRequestHeader('Access-Control-Allow-Origin', '*');
+            request.onreadystatechange = onreadystatechange = function () {
+                if (request.readyState === 4 && request.status === 200) {
+                    var json = JSON.parse(request.responseText);
+                    console.log(json.email + ", " + json.password);
+                }
+            };
+            request.send();
+        }
+        else if (XDomainRequest) {
+            // IE8
+            var xdr = new XDomainRequest();
+            xdr.open("get", url);
+            xdr.send();
+
+            // handle XDR responses -- not shown here :-)
+        }
+
+        // This version of XHR does not support CORS
+        // Handle accordingly
+    }
+
+        /*var form = document.getElementsByName("myForm")
 
         var xhr = new XMLHttpRequest();
             var url = "localhost:3000/notes";
             xhr.open("POST", url, true);
-            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.withCredentials = true;
+            xhr.setRequestHeader("Content-Type", "application/json", "Access-Control-Allow-Credentials: true");
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     var json = JSON.parse(xhr.responseText);
@@ -28,7 +57,7 @@
                 }
             };
             var data = JSON.stringify({ "email": "hey@mail.com", "pass": "101010" });
-            xhr.send(data);
+            xhr.send(data);*/
     </script>
 
 
