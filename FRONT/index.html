@@ -3,18 +3,34 @@
 
 <body>
 
-    <form action="localhost:3000/notes" method="post">
-
-        <div>
-            <label for="mail">e-mail :</label>
-            <input id="email" name="email">
-        </div>
-        <div>
-            <label for="msg">Password :</label>
-            <textarea id="pass" name="pass"></textarea>
-        </div>
-        <input value="Connexion" type="submit" id="u_0_2" />
+    <form enctype="application/json" action="localhost:3000/notes" method="post" name="myForm">
+        <label for="email">e-mail :</label>
+        <input id="email" name="email">
+        
+        <label for="pass">Password :</label>
+        <input id="pass" name="pass"></input>
+        
+        <input value="Connexion" type="submit" onclick="submitform()" />
     </form>
+
+    <script type="text/javascript">
+
+        var form = document.getElementsByName("myForm")
+
+        var xhr = new XMLHttpRequest();
+            var url = "localhost:3000/notes";
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var json = JSON.parse(xhr.responseText);
+                    console.log(json.email + ", " + json.password);
+                }
+            };
+            var data = JSON.stringify({ "email": "hey@mail.com", "pass": "101010" });
+            xhr.send(data);
+    </script>
+
 
 </body>
 
