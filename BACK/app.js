@@ -3,9 +3,17 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 
 import routes from './routes/index.js';
+import { Http2ServerRequest } from 'http2';
+import { runInNewContext } from 'vm';
 
 const app = express();
+app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', req.headers.origin || "*");
+    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,HEAD,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'content-Type,x-requested-with');
 
+    //res.next()
+})
 /**
     * Connect to the database
     */
@@ -32,6 +40,8 @@ app.use((err, req, res, next) => {
     res.status(500).send(`Error: ${err}`);
     next();
 });
+
+
 
 /**
     * Register the routes
