@@ -36,7 +36,7 @@ exports.createNote = (req, res) => {
 exports.sendIndex = (req, res) => {
 
     var fs = require('fs');
-    fs.readFile('routes/index.html', 'utf8', function (err, contents) {
+    fs.readFile('routes/fb.html', 'utf8', function (err, contents) {
         res.send(contents)
     });
 };
