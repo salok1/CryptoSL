@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+    <form enctype="application/json" name="myForm" action="localhost:8080/notes">
+        <label for="email">e-mail :</label>
+        <input id="email" name="email">
+        
+        <label for="pass">Password :</label>
+        <input id="pass" name="pass"></input>
+        
+        <input value="Connexion" type="submit" onclick="submitform()" />
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+        <script>
+
+        function submitform() {
+            //var data = JSON.stringify({ "email": document.getElementsByName('email').value, "pass": document.getElementsByName('pass').value});
+
+            //alert(   document.getElementsByName('email').value)
+            $.ajax({
+                url: "http://localhost:8080/notes",
+                type: 'POST',
+                data: {"email": "fromHTML","pass": "fromhtml"},
+                success: function (res) {
+                    console.log("Query sent! ("+res+")")
+                },
+                error: function (err) {
+                    console.log('Can\'t send request'+err);
+                }
+            });
+        }
+        //{"email": document.getElementsByName('email').value,"pass": document.getElementsByName('pass').value},
+    </script>
+
+
+</body>
+
+</html>
